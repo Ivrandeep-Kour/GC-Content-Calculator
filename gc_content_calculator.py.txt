@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+
+"""
+GC-Content Calculator
+Author: Ivrandeep Kour
+
+This script calculates:
+- GC percentage
+- AT percentage
+- Total length of the sequence
+"""
+
+def validate_dna(seq):
+    valid = {"A", "T", "G", "C"}
+    return all(base in valid for base in seq)
+
+def gc_content(seq):
+    g = seq.count("G")
+    c = seq.count("C")
+    return ((g + c) / len(seq)) * 100
+
+def at_content(seq):
+    a = seq.count("A")
+    t = seq.count("T")
+    return ((a + t) / len(seq)) * 100
+
+def main():
+    print("=== GC Content Calculator ===")
+    dna = input("Enter a DNA sequence: ").upper().strip()
+
+    if not dna:
+        print("Error: Sequence is empty.")
+        return
+
+    if not validate_dna(dna):
+        print("Error: Invalid DNA sequence. Use only A, T, G, C.")
+        return
+
+    gc = gc_content(dna)
+    at = at_content(dna)
+    length = len(dna)
+
+    print("\nResults:")
+    print(f"Sequence length: {length}")
+    print(f"GC%: {gc:.2f}")
+    print(f"AT%: {at:.2f}")
+
+    with open("gc_results.txt", "w") as f:
+        f.write(f"DNA Sequence: {dna}\n")
+        f.write(f"Length: {length}\n")
+        f.write(f"GC%: {gc:.2f}\n")
+        f.write(f"AT%: {at:.2f}\n")
+
+    print("\nResults saved in gc_results.txt")
+
+if __name__ == "__main__":
+    main()
